@@ -5,6 +5,7 @@ declare global {
     interface ProcessEnv {
       SC_ADDRESS: string;
       COLL_ADDRESS: string;
+      NODE_ENV: string;
     }
   }
 }

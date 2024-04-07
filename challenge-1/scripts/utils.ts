@@ -8,8 +8,14 @@ dotenvFlow.config({ debug: false });
 export const nftCollectionAddress = Address.parse(process.env.COLL_ADDRESS);
 
 export async function getTonClient() {
+  const network = process.env.NODE_ENV === "production" ? "mainnet" : "testnet";
+
+  console.log(`Network: ${network}`);
+
   return new TonClient({
-    endpoint: await getHttpEndpoint({ network: "testnet" }),
+    endpoint: await getHttpEndpoint({
+      network,
+    }),
   });
 }
 
