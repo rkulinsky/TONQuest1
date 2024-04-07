@@ -5,7 +5,7 @@ import qs from "qs";
 import { getNextItem } from "./utils";
 
 async function deployItem() {
-  /////////////////////////////////////// collect data here ////////////////////////////////////////////
+  console.log(`Collection: ${process.env.COLL_ADDRESS}`);
 
   // 1) Your address - NFT will store owner address, so be the owner!!
   // You can find you testnet Address in your Wallet
@@ -41,8 +41,6 @@ async function deployItem() {
   body.storeRef(nftItemContent.endCell());
   const readyBody = body.endCell();
 
-  /////////////////////////////////////// Deploy link //////////////////////////////////////
-
   console.log("Scan QR code below with your Tonkeeper Wallet");
 
   const collectionAddress = Address.parse(process.env.COLL_ADDRESS);
@@ -50,7 +48,7 @@ async function deployItem() {
   let deployLink =
     "https://app.tonkeeper.com/transfer/" +
     collectionAddress.toString({
-      testOnly: true,
+      testOnly: process.env.NODE_ENV !== "production",
     }) +
     "?" +
     qs.stringify({
