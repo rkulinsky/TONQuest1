@@ -1,17 +1,22 @@
+import { getHttpEndpoint } from "@orbs-network/ton-access";
 import { Address } from "@ton/core";
 import { TonClient } from "@ton/ton";
+import dotenvFlow from "dotenv-flow";
 
-export const toncenter = new TonClient({
-  endpoint: "https://testnet.toncenter.com/api/v2/jsonRPC",
-});
+dotenvFlow.config({ debug: false });
 
-export const nftCollectionAddress = Address.parse(
-  "EQDf6HCOggN_ZGL6YsYleN6mDiclQ_NJOMY-x8G5cTRDOBW4"
-);
-//https://testnet.explorer.tonnft.tools/collection/EQDf6HCOggN_ZGL6YsYleN6mDiclQ_NJOMY-x8G5cTRDOBW4
+export const nftCollectionAddress = Address.parse(process.env.COLL_ADDRESS);
+
+export async function getTonClient() {
+  return new TonClient({
+    endpoint: await getHttpEndpoint({ network: "testnet" }),
+  });
+}
 
 export async function getNextItem() {
-  const { stack } = await toncenter
+  const client = await getTonClient();
+
+  const { stack } = await client
     .provider(nftCollectionAddress)
     .get("get_collection_data", []);
 

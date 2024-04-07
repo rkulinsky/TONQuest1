@@ -1,17 +1,9 @@
-import { Address } from "@ton/core";
-import { TonClient } from "@ton/ton";
-
-export const toncenter = new TonClient({
-  endpoint: "https://testnet.toncenter.com/api/v2/jsonRPC",
-});
-
-export const nftCollectionAddress = Address.parse(
-  "EQDf6HCOggN_ZGL6YsYleN6mDiclQ_NJOMY-x8G5cTRDOBW4"
-);
-//https://testnet.explorer.tonnft.tools/collection/EQDf6HCOggN_ZGL6YsYleN6mDiclQ_NJOMY-x8G5cTRDOBW4
+import { getTonClient, nftCollectionAddress } from "./utils";
 
 export async function getCollectionData() {
-  const { stack } = await toncenter
+  const client = await getTonClient();
+
+  const { stack } = await client
     .provider(nftCollectionAddress)
     .get("get_collection_data", []);
 
@@ -23,7 +15,6 @@ export async function getCollectionData() {
   console.log("Next item index:", nextItemIndex.toString());
   console.log("Content root cell:", contentRoot);
   console.log("Collection owner adress:", owner);
-  console.log("Workchain:", owner.workChain);
 
   return nextItemIndex;
 }

@@ -9,9 +9,7 @@ async function deployItem() {
 
   // 1) Your address - NFT will store owner address, so be the owner!!
   // You can find you testnet Address in your Wallet
-  const ownerAddress = Address.parse(
-    "UQApA79Qt8VEOeTfHu9yKRPdJ_dADvspqh5BqV87PgWD998f"
-  );
+  const ownerAddress = Address.parse(process.env.SC_ADDRESS);
   //const ownerAddress = Address.parse('input your adress here');
   //take next Item
 
@@ -47,9 +45,7 @@ async function deployItem() {
 
   console.log("Scan QR code below with your Tonkeeper Wallet");
 
-  const collectionAddress = Address.parse(
-    "EQDf6HCOggN_ZGL6YsYleN6mDiclQ_NJOMY-x8G5cTRDOBW4"
-  );
+  const collectionAddress = Address.parse(process.env.COLL_ADDRESS);
 
   let deployLink =
     "https://app.tonkeeper.com/transfer/" +
